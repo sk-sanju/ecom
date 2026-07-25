@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
-import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Tag } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Tag, ListTree } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 
 const AdminLayout = ({ children, title }: { children: ReactNode; title?: string }) => {
@@ -17,6 +17,7 @@ const AdminLayout = ({ children, title }: { children: ReactNode; title?: string 
     { path: "/admin/orders", icon: ShoppingCart, label: "Orders" },
     { path: "/admin/products", icon: Package, label: "Products" },
     { path: "/admin/offers", icon: Tag, label: "Offers" },
+    { path: "/admin/categories", icon: ListTree, label: "Categories" },
     { path: "/admin/users", icon: Users, label: "Customers" },
     { path: "/admin/settings", icon: Settings, label: "Settings" },
   ];

@@ -27,3 +27,40 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Error creating category" });
   }
 };
+export const updateCategory = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+    const category = await prisma.category.update({
+      where: { id },
+      data: { name }
+    });
+    res.json(category);
+  } catch (error) {
+    res.status(500).json({ error: "Error updating category" });
+  }
+};
+
+export const deleteCategory = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    
+    // Check if there are any products attached
+    const productsCount = await prisma.product.count({
+      where: { categoryId: id }
+    });
+
+    if (productsCount > 0) {
+      return res.status(400).json({ 
+        error: `Cannot delete category because it has ${productsCount} product(s) assigned to it.` 
+      });
+    }
+
+    await prisma.category.delete({
+      where: { id }
+    });
+    res.json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting category" });
+  }
+};

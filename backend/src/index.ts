@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {
+      if (!origin || origin.includes('vercel.app') || origin.includes('localhost') || origin.includes('xenotrix.in')) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
