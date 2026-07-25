@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart, User, Menu, Search, ChevronDown } from "lucide-react";
+import { ShoppingCart, Menu, Search, ChevronDown } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useCart } from "../../contexts/CartContext";
 import { useState } from "react";
@@ -30,7 +30,7 @@ const Navbar = () => {
           {/* Search Bar - Hidden on small mobile */}
           <form 
             onSubmit={handleSearch}
-            className="hidden md:flex flex-1 max-w-3xl h-10 rounded-sm overflow-hidden"
+            className="hidden md:flex flex-1 max-w-3xl h-10 rounded-sm overflow-hidden focus-within:ring-2 focus-within:ring-accent"
           >
             <div className="bg-gray-100 text-gray-700 px-3 flex items-center text-sm border-r border-gray-300 hover:bg-gray-200 cursor-pointer">
               All <ChevronDown className="w-3 h-3 ml-1" />
@@ -38,7 +38,7 @@ const Navbar = () => {
             <input 
               type="text" 
               placeholder="Search for products, brands and more"
-              className="flex-1 px-4 text-black focus:outline-none"
+              className="flex-1 bg-white px-4 text-black focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -106,7 +106,7 @@ const Navbar = () => {
             <input 
               type="text" 
               placeholder="Search Xenotrix"
-              className="flex-1 px-4 text-black focus:outline-none"
+              className="flex-1 bg-white px-4 text-black focus:outline-none"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

@@ -55,7 +55,7 @@ export const updateOrderStatus = async (req: AuthRequest, res: Response) => {
       return res.status(403).json({ error: "Forbidden" });
     }
 
-    const { id } = req.params;
+    const id = req.params.id as string;
     const { status } = req.body;
 
     const updatedOrder = await prisma.order.update({

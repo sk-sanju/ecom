@@ -80,3 +80,30 @@ export const sendOrderStatusUpdateEmail = async (user: any, order: any) => {
     console.error("Error sending email:", error);
   }
 };
+
+export const sendPasswordResetEmail = async (user: any, resetLink: string) => {
+  if (!transporter) return;
+  
+  const mailOptions = {
+    from: '"Xenotrix E-Commerce" <no-reply@xenotrix.com>',
+    to: user.email,
+    subject: `Password Reset Request`,
+    text: `Hi ${user.name},\n\nYou requested a password reset. Please click the link below to reset your password:\n\n${resetLink}\n\nIf you did not request this, please ignore this email.\n\nBest,\nXenotrix Team`,
+    html: `
+      <h2>Hi ${user.name},</h2>
+      <p>You requested a password reset. Please click the link below to reset your password:</p>
+      <p><a href="${resetLink}">${resetLink}</a></p>
+      <p>If you did not request this, please ignore this email.</p>
+      <p>Best,<br/>Xenotrix Team</p>
+    `
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log(`Password Reset Email sent: ${info.messageId}`);
+    // Ethereal specific: Preview URL
+    console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+  }
+};

@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import prisma from "../prisma";
 import { generateToken } from "../utils/jwt";
 import { AuthRequest } from "../middlewares/auth";
+import { sendPasswordResetEmail } from "../utils/mailer";
 
 export const createUser = async (req: AuthRequest, res: Response) => {
   try {
@@ -145,3 +147,62 @@ export const getUsers = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ error: "Error fetching users" });
   }
 };
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    const user = await prisma.user.findUnique({ where: { email } });
+    
+    if (!user) {
+      // Return 200 even if user not found to prevent email enumeration
+      return res.status(200).json({ message: "If that email is registered, a password reset link has been sent." });
+    }
+
+    const secret = (process.env.JWT_SECRET || 'fallback_secret') + user.password;
+    const payload = {
+      email: user.email,
+      id: user.id
+    };
+    const token = jwt.sign(payload, secret, { expiresIn: '15m' });
+    const resetLink = `http://localhost:5173/reset-password?token=${token}&id=${user.id}`;
+    
+    await sendPasswordResetEmail(user, resetLink);
+    
+    res.status(200).json({ message: "If that email is registered, a password reset link has been sent." });
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    res.status(500).json({ error: "Error processing forgot password request" });
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { id, token, newPassword } = req.body;
+    
+    const user = await prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      return res.status(400).json({ error: "Invalid link or user" });
+    }
+
+    const secret = (process.env.JWT_SECRET || 'fallback_secret') + user.password;
+    try {
+      jwt.verify(token, secret);
+    } catch (error) {
+      return res.status(400).json({ error: "Token is invalid or has expired" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { password: hashedPassword }
+    });
+
+    res.status(200).json({ message: "Password has been successfully reset" });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    res.status(500).json({ error: "Error resetting password" });
+  }
+};
+

@@ -38,7 +38,7 @@ export const createOffer = async (req: Request, res: Response) => {
 
 export const updateOffer = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const { title, images, link } = req.body;
 
     const offer = await prisma.offerCard.update({
@@ -55,7 +55,7 @@ export const updateOffer = async (req: Request, res: Response) => {
 
 export const deleteOffer = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
 
     await prisma.offerCard.delete({
       where: { id }

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import ProductCard from "../components/product/ProductCard";
 import { Loader2, ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -218,7 +217,7 @@ const Home = () => {
         {/* Browsing History Strip */}
         <div>
           <div className="flex items-center gap-4 mb-6 px-2">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Inspired by your history</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Recommended for You</h2>
           </div>
           
           {isLoading ? (

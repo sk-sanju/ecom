@@ -1,9 +1,9 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link, useLocation, Navigate } from "react-router-dom";
 import { LayoutDashboard, Package, ShoppingCart, Users, Settings, LogOut, Tag } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 
-const AdminLayout = ({ children }: { children: ReactNode }) => {
+const AdminLayout = ({ children, title }: { children: ReactNode; title?: string }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
 
@@ -67,7 +67,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
       <main className="flex-1 md:ml-64 bg-gray-50 min-h-screen pb-12">
         <header className="h-16 bg-white border-b border-gray-200 sticky top-0 z-10 flex items-center justify-between px-8">
           <h1 className="text-xl font-bold text-gray-800">
-            {menuItems.find(m => m.path === location.pathname)?.label || "Admin Area"}
+            {title || menuItems.find(m => m.path === location.pathname)?.label || "Admin Area"}
           </h1>
           <div className="flex items-center gap-4">
             <Link 
