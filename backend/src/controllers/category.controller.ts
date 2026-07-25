@@ -29,7 +29,7 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 export const updateCategory = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const { name } = req.body;
     const category = await prisma.category.update({
       where: { id },
@@ -43,7 +43,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 
 export const deleteCategory = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     
     // Check if there are any products attached
     const productsCount = await prisma.product.count({
