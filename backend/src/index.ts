@@ -15,10 +15,13 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: [
-      "https://ecom-theta-beryl.vercel.app",
-      "http://localhost:5173"
-    ],
+    origin: function (origin, callback) {
+      if (!origin || origin.includes('vercel.app') || origin.includes('localhost')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true
   })
 );
