@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { useAuth } from "../../contexts/AuthContext";
 import { Loader2 } from "lucide-react";
+import { API_URL } from "../../config/api";
 
 const AdminOrders = () => {
   const { token } = useAuth();
@@ -10,7 +11,7 @@ const AdminOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders?all=true", {
+      const res = await fetch(`${API_URL}/api/orders?all=true`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -28,7 +29,7 @@ const AdminOrders = () => {
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      const res = await fetch(`${API_URL}/api/orders/${orderId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

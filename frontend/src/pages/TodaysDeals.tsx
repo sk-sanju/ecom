@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Loader2, Star, Clock } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
+import { API_URL } from "../config/api";
 
 const TodaysDeals = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -11,7 +12,7 @@ const TodaysDeals = () => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch(`${API_URL}/api/products`);
         const data = await res.json();
         // Filter to only items with a discount
         const deals = data.filter((p: any) => p.discountPrice && p.discountPrice < p.price);

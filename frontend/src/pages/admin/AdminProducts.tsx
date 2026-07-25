@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Plus, Search, Loader2, Edit, Trash2, X } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { API_URL } from "../../config/api";
 
 const AdminProducts = () => {
   const { token } = useAuth();
@@ -31,8 +32,8 @@ const AdminProducts = () => {
   const fetchData = async () => {
     try {
       const [prodRes, catRes] = await Promise.all([
-        fetch("http://localhost:5000/api/products"),
-        fetch("http://localhost:5000/api/categories")
+        fetch(`${API_URL}/api/products`),
+        fetch(`${API_URL}/api/categories`)
       ]);
       const prodData = await prodRes.json();
       const catData = await catRes.json();
@@ -110,8 +111,8 @@ const AdminProducts = () => {
       delete (payload as any).image;
 
       const url = isEditing 
-        ? `http://localhost:5000/api/products/${currentProductId}`
-        : "http://localhost:5000/api/products";
+        ? `${API_URL}/api/products/${currentProductId}`
+        : `${API_URL}/api/products`;
         
       const method = isEditing ? "PUT" : "POST";
       
@@ -140,7 +141,7 @@ const AdminProducts = () => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${API_URL}/api/products/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });

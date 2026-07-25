@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Plus, Loader2, Edit, Trash2, X } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { API_URL } from "../../config/api";
 
 const AdminOffers = () => {
   const { token } = useAuth();
@@ -23,7 +24,7 @@ const AdminOffers = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/offers");
+      const res = await fetch(`${API_URL}/api/offers`);
       const data = await res.json();
       setOffers(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -82,8 +83,8 @@ const AdminOffers = () => {
     
     try {
       const url = isEditing 
-        ? `http://localhost:5000/api/offers/${currentOfferId}` 
-        : "http://localhost:5000/api/offers";
+        ? `${API_URL}/api/offers/${currentOfferId}` 
+        : `${API_URL}/api/offers`;
         
       const method = isEditing ? "PUT" : "POST";
       
@@ -112,7 +113,7 @@ const AdminOffers = () => {
     if (!window.confirm("Are you sure you want to delete this offer card?")) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/offers/${id}`, {
+      const res = await fetch(`${API_URL}/api/offers/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`

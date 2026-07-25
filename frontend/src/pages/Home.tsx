@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Loader2, ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../config/api";
 
 const Home = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -32,9 +33,9 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const [prodRes, offersRes, settingsRes] = await Promise.all([
-          fetch("http://localhost:5000/api/products"),
-          fetch("http://localhost:5000/api/offers"),
-          fetch("http://localhost:5000/api/settings")
+          fetch(`${API_URL}/api/products`),
+          fetch(`${API_URL}/api/offers`),
+          fetch(`${API_URL}/api/settings`)
         ]);
         const prodData = await prodRes.json();
         const offersData = await offersRes.json();

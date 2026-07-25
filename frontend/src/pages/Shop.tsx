@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Loader2, Star, LayoutGrid, List } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
+import { API_URL } from "../config/api";
 
 const Shop = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -26,8 +27,8 @@ const Shop = () => {
     const fetchData = async () => {
       try {
         const [prodRes, catRes] = await Promise.all([
-          fetch("http://localhost:5000/api/products"),
-          fetch("http://localhost:5000/api/categories")
+          fetch(`${API_URL}/api/products`),
+          fetch(`${API_URL}/api/categories`)
         ]);
         const prodData = await prodRes.json();
         const catData = await catRes.json();

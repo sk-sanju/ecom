@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { useAuth } from "../../contexts/AuthContext";
 import { Loader2, User, Plus, X } from "lucide-react";
+import { API_URL } from "../../config/api";
 
 const AdminUsers = () => {
   const { token } = useAuth();
@@ -19,7 +20,7 @@ const AdminUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/users", {
+      const res = await fetch(`${API_URL}/api/auth/users`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       if (!res.ok) throw new Error("Failed to fetch users");
@@ -45,7 +46,7 @@ const AdminUsers = () => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/users", {
+      const res = await fetch(`${API_URL}/api/auth/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

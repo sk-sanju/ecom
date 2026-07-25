@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import { Package, User, MapPin, Loader2, X, CheckCircle2, Truck, Box, FileText } from "lucide-react";
+import { API_URL } from "../config/api";
 
 const Profile = () => {
   const { user, token, updateUser } = useAuth();
@@ -36,7 +37,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/orders", {
+        const res = await fetch(`${API_URL}/api/orders`, {
           headers: { "Authorization": `Bearer ${token}` }
         });
         const data = await res.json();
@@ -99,7 +100,7 @@ const Profile = () => {
         payload.address = JSON.stringify(addressData);
       }
 
-      const res = await fetch("http://localhost:5000/api/auth/me", {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

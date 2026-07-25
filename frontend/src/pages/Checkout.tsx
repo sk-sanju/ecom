@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
 import { CheckCircle2, ChevronRight, Loader2, ArrowRight } from "lucide-react";
+import { API_URL } from "../config/api";
 
 const Checkout = () => {
   const { items, cartTotal, clearCart } = useCart();
@@ -24,7 +25,7 @@ const Checkout = () => {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -13,7 +13,15 @@ import settingsRoutes from "./routes/settings.routes";
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "https://YOUR-VERCEL-DOMAIN.vercel.app",
+      "http://localhost:5173"
+    ],
+    credentials: true
+  })
+);
 app.use(helmet());
 app.use(express.json());
 

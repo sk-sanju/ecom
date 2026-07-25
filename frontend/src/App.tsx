@@ -34,6 +34,7 @@ import Registry from "./pages/Registry";
 import GiftCards from "./pages/GiftCards";
 import Sell from "./pages/Sell";
 import { useLocation } from "react-router-dom";
+import { API_URL } from "./config/api";
 
 function AppContent() {
   const location = useLocation();
@@ -94,7 +95,7 @@ function App() {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/settings");
+        const res = await fetch(`${API_URL}/api/settings`);
         if (res.ok) {
           const settings = await res.json();
           if (settings.primaryColor) {

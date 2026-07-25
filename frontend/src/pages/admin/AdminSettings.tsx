@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { Save, Loader2 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { API_URL } from "../../config/api";
 
 const AdminSettings = () => {
   const { token, user, updateUser } = useAuth();
@@ -40,7 +41,7 @@ const AdminSettings = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/settings");
+        const res = await fetch(`${API_URL}/api/settings`);
         if (res.ok) {
           const settings = await res.json();
           if (settings.storeName) setStoreName(settings.storeName);
@@ -79,7 +80,7 @@ const AdminSettings = () => {
         heroBanners: JSON.stringify(heroBanners)
       };
       
-      const res = await fetch("http://localhost:5000/api/settings", {
+      const res = await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +116,7 @@ const AdminSettings = () => {
         payload.password = adminPassword;
       }
       
-      const res = await fetch("http://localhost:5000/api/auth/me", {
+      const res = await fetch(`${API_URL}/api/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
