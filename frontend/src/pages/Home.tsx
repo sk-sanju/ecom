@@ -175,7 +175,7 @@ const Home = () => {
             <div className="relative group/slider">
               <div className="flex gap-6 overflow-x-auto pb-8 hide-scrollbar px-2 snap-x">
                 {products.map((product) => (
-                  <div key={product.id} className="min-w-[240px] md:min-w-[280px] bg-white rounded-3xl p-4 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow group/card flex flex-col snap-start border border-gray-100">
+                  <div key={product.id} className="w-[240px] min-w-[240px] md:w-[280px] md:min-w-[280px] flex-none bg-white rounded-3xl p-4 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow group/card flex flex-col snap-start border border-gray-100">
                     <Link to={`/product/${product.id}`} className="block relative aspect-[4/5] bg-[#f4f4f4] rounded-2xl overflow-hidden mb-4">
                       <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover object-center group-hover/card:scale-105 transition-transform duration-500 mix-blend-multiply" />
                       {product.discountPrice && (
@@ -228,7 +228,7 @@ const Home = () => {
           ) : (
             <div className="flex gap-5 overflow-x-auto pb-8 hide-scrollbar px-2 snap-x">
               {products.slice().reverse().map((product) => (
-                <Link to={`/product/${product.id}`} key={product.id} className="min-w-[160px] md:min-w-[200px] group cursor-pointer snap-start">
+                <Link to={`/product/${product.id}`} key={product.id} className="w-[160px] min-w-[160px] md:w-[200px] md:min-w-[200px] flex-none group cursor-pointer snap-start">
                   <div className="bg-white aspect-square rounded-3xl overflow-hidden mb-3 shadow-[0_4px_20px_rgb(0,0,0,0.03)] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all p-3 border border-gray-100">
                     <div className="w-full h-full bg-[#f4f4f4] rounded-2xl overflow-hidden">
                       <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform duration-500" />
