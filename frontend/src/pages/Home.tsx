@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Loader2, ChevronRight, ChevronLeft, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { API_URL } from "../config/api";
+import { useCart } from "../contexts/CartContext";
 
 const Home = () => {
+  const { addItem } = useCart();
   const [products, setProducts] = useState<any[]>([]);
   const [offers, setOffers] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -203,7 +205,20 @@ const Home = () => {
                             <span className="text-sm text-gray-400 line-through font-medium">₹{product.price}</span>
                           )}
                         </div>
-                        <button className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-900 hover:text-white flex items-center justify-center transition-colors text-gray-600" aria-label="Add to cart">
+                        <button 
+                          className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-900 hover:text-white flex items-center justify-center transition-colors text-gray-600" 
+                          aria-label="Add to cart"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            addItem({
+                              id: product.id,
+                              name: product.name,
+                              price: product.discountPrice || product.price,
+                              image: product.images[0]
+                            });
+                          }}
+                        >
                           <ShoppingCart className="w-5 h-5" />
                         </button>
                       </div>
